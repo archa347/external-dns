@@ -280,6 +280,7 @@ func (sc *routeGroupSource) Endpoints(ctx context.Context) ([]*endpoint.Endpoint
 		}
 
 		log.Debugf("Endpoints generated from ingress: %s/%s: %v", rg.Metadata.Namespace, rg.Metadata.Name, eps)
+		sc.setRouteGroupResourceLabel(rg, eps)
 		sc.setRouteGroupDualstackLabel(rg, eps)
 		endpoints = append(endpoints, eps...)
 	}
@@ -322,6 +323,12 @@ func (sc *routeGroupSource) endpointsFromTemplate(rg *routeGroup) ([]*endpoint.E
 		endpoints = append(endpoints, endpointsForHostname(hostname, targets, ttl, providerSpecific, setIdentifier, resource)...)
 	}
 	return endpoints, nil
+}
+
+func (sc *routeGroupSource) setRouteGroupResourceLabel(rg *routeGroup, eps []*endpoint.Endpoint) {
+	for _, ep := range eps {
+		ep.Labels[endpoint.ResourceLabelKey] = fmt.Sprintf("routegroup/%s/%s", rg.Metadata.Namespace, rg.Metadata.Name)
+	}
 }
 
 func (sc *routeGroupSource) setRouteGroupDualstackLabel(rg *routeGroup, eps []*endpoint.Endpoint) {

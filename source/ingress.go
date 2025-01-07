@@ -171,6 +171,7 @@ func (sc *ingressSource) Endpoints(ctx context.Context) ([]*endpoint.Endpoint, e
 		}
 
 		log.Debugf("Endpoints generated from ingress: %s/%s: %v", ing.Namespace, ing.Name, ingEndpoints)
+		sc.setResourceLabel(ing, ingEndpoints)
 		sc.setDualstackLabel(ing, ingEndpoints)
 		endpoints = append(endpoints, ingEndpoints...)
 	}
@@ -272,6 +273,12 @@ func (sc *ingressSource) filterByIngressClass(ingresses []*networkv1.Ingress) ([
 	}
 
 	return filteredList, nil
+}
+
+func (sc *ingressSource) setResourceLabel(ingress *networkv1.Ingress, endpoints []*endpoint.Endpoint) {
+	for _, ep := range endpoints {
+		ep.Labels[endpoint.ResourceLabelKey] = fmt.Sprintf("ingress/%s/%s", ingress.Namespace, ingress.Name)
+	}
 }
 
 func (sc *ingressSource) setDualstackLabel(ingress *networkv1.Ingress, endpoints []*endpoint.Endpoint) {

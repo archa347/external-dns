@@ -150,6 +150,7 @@ func (sc *kongTCPIngressSource) Endpoints(ctx context.Context) ([]*endpoint.Endp
 		}
 
 		log.Debugf("Endpoints generated from TCPIngress: %s: %v", fullname, ingressEndpoints)
+		sc.setResourceLabel(tcpIngress, ingressEndpoints)
 		sc.setDualstackLabel(tcpIngress, ingressEndpoints)
 		endpoints = append(endpoints, ingressEndpoints...)
 	}
@@ -190,6 +191,12 @@ func (sc *kongTCPIngressSource) filterByAnnotations(tcpIngresses []*TCPIngress) 
 	}
 
 	return filteredList, nil
+}
+
+func (sc *kongTCPIngressSource) setResourceLabel(tcpIngress *TCPIngress, endpoints []*endpoint.Endpoint) {
+	for _, ep := range endpoints {
+		ep.Labels[endpoint.ResourceLabelKey] = fmt.Sprintf("tcpingress/%s/%s", tcpIngress.Namespace, tcpIngress.Name)
+	}
 }
 
 func (sc *kongTCPIngressSource) setDualstackLabel(tcpIngress *TCPIngress, endpoints []*endpoint.Endpoint) {
