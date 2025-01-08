@@ -976,25 +976,25 @@ func TestAWSApplyChanges(t *testing.T) {
 			},
 			{
 				Name:            aws.String("update-test-aaaa-to-alias.zone-1.ext-dns-test-2.teapot.zalan.do."),
-				Type:            aws.String(route53.RRTypeAaaa),
+				Type:            route53types.RRTypeAaaa,
 				TTL:             aws.Int64(recordTTL),
-				ResourceRecords: []*route53.ResourceRecord{{Value: aws.String("2001:DB8::1")}},
+				ResourceRecords: []route53types.ResourceRecord{{Value: aws.String("2001:DB8::1")}},
 			},
 			{
 				Name: aws.String("update-test-alias-to-a.zone-1.ext-dns-test-2.teapot.zalan.do."),
-				Type: aws.String(route53.RRTypeA),
-				AliasTarget: &route53.AliasTarget{
+				Type: route53types.RRTypeA,
+				AliasTarget: &route53types.AliasTarget{
 					DNSName:              aws.String("foo.eu-central-1.elb.amazonaws.com."),
-					EvaluateTargetHealth: aws.Bool(true),
+					EvaluateTargetHealth: true,
 					HostedZoneId:         aws.String("Z215JYRZR1TBD5"),
 				},
 			},
 			{
 				Name: aws.String("update-test-alias-to-aaaa.zone-1.ext-dns-test-2.teapot.zalan.do."),
-				Type: aws.String(route53.RRTypeAaaa),
-				AliasTarget: &route53.AliasTarget{
+				Type: route53types.RRTypeAaaa,
+				AliasTarget: &route53types.AliasTarget{
 					DNSName:              aws.String("foo.eu-central-1.elb.amazonaws.com."),
-					EvaluateTargetHealth: aws.Bool(true),
+					EvaluateTargetHealth: true,
 					HostedZoneId:         aws.String("Z215JYRZR1TBD5"),
 				},
 			},
@@ -1062,10 +1062,10 @@ func TestAWSApplyChanges(t *testing.T) {
 			},
 			{
 				Name: aws.String("weighted-to-simple-alias.zone-1.ext-dns-test-2.teapot.zalan.do."),
-				Type: aws.String(route53.RRTypeA),
-				AliasTarget: &route53.AliasTarget{
+				Type: route53types.RRTypeA,
+				AliasTarget: &route53types.AliasTarget{
 					DNSName:              aws.String("foo.eu-central-1.elb.amazonaws.com."),
-					EvaluateTargetHealth: aws.Bool(true),
+					EvaluateTargetHealth: true,
 					HostedZoneId:         aws.String("Z215JYRZR1TBD5"),
 				},
 				SetIdentifier: aws.String("weighted-to-simple-alias"),
@@ -1234,24 +1234,24 @@ func TestAWSApplyChanges(t *testing.T) {
 			},
 			{
 				Name: aws.String("update-test-aaaa-to-alias.zone-1.ext-dns-test-2.teapot.zalan.do."),
-				Type: aws.String(route53.RRTypeAaaa),
-				AliasTarget: &route53.AliasTarget{
+				Type: route53types.RRTypeAaaa,
+				AliasTarget: &route53types.AliasTarget{
 					DNSName:              aws.String("bar.elb.amazonaws.com."),
-					EvaluateTargetHealth: aws.Bool(true),
+					EvaluateTargetHealth: true,
 					HostedZoneId:         aws.String("zone-1.ext-dns-test-2.teapot.zalan.do."),
 				},
 			},
 			{
 				Name:            aws.String("update-test-alias-to-a.zone-1.ext-dns-test-2.teapot.zalan.do."),
-				Type:            aws.String(route53.RRTypeA),
+				Type:            route53types.RRTypeA,
 				TTL:             aws.Int64(recordTTL),
-				ResourceRecords: []*route53.ResourceRecord{{Value: aws.String("1.1.1.1")}},
+				ResourceRecords: []route53types.ResourceRecord{{Value: aws.String("1.1.1.1")}},
 			},
 			{
 				Name:            aws.String("update-test-alias-to-aaaa.zone-1.ext-dns-test-2.teapot.zalan.do."),
-				Type:            aws.String(route53.RRTypeAaaa),
+				Type:            route53types.RRTypeAaaa,
 				TTL:             aws.Int64(recordTTL),
-				ResourceRecords: []*route53.ResourceRecord{{Value: aws.String("2001:DB8::1")}},
+				ResourceRecords: []route53types.ResourceRecord{{Value: aws.String("2001:DB8::1")}},
 			},
 			{
 				Name:            aws.String("update-test-alias-to-cname.zone-1.ext-dns-test-2.teapot.zalan.do."),
@@ -1300,10 +1300,10 @@ func TestAWSApplyChanges(t *testing.T) {
 			},
 			{
 				Name: aws.String("weighted-to-simple-alias.zone-1.ext-dns-test-2.teapot.zalan.do."),
-				Type: aws.String(route53.RRTypeA),
-				AliasTarget: &route53.AliasTarget{
+				Type: route53types.RRTypeA,
+				AliasTarget: &route53types.AliasTarget{
 					DNSName:              aws.String("foo.eu-central-1.elb.amazonaws.com."),
-					EvaluateTargetHealth: aws.Bool(true),
+					EvaluateTargetHealth: true,
 					HostedZoneId:         aws.String("Z215JYRZR1TBD5"),
 				},
 			},
